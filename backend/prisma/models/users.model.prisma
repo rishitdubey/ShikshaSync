@@ -1,0 +1,54 @@
+model admin {
+  id        Int      @id @default(autoincrement())
+  email     String?  @unique
+  fullName  String
+  staffId   String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model faculty {
+  id             Int        @id @default(autoincrement())
+  email          String?    @unique
+  fullName       String
+  staffId        String     @unique
+  password       String
+  departmentName String
+  designation    String
+  sub_taught     String
+  department     department @relation(fields: [departmentName], references: [name])
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+}
+
+model student {
+  id             Int        @id @default(autoincrement())
+  email          String?    @unique
+  fullName       String
+  studentId      String     @unique
+  password       String
+  semester       Int
+  departmentName String
+  allotmentNo    Int        @unique
+  gender         String
+  date_of_birth  Int
+  address        String
+  curr_semester  Int
+  department     department @relation(fields: [departmentName], references: [name])
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+}
+
+model officer {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  password    String
+  officerId   String   @unique
+  designation String
+  email       String?  @unique
+  section     section? @relation("OfficerSection", fields: [sectionName], references: [name])
+  sectionName String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

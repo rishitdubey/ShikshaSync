@@ -1,0 +1,29 @@
+model department {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  hod       String
+  students  student[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  faculty   faculty[]
+}
+
+model hostel {
+  id            Int      @id @default(autoincrement())
+  number        Int      @unique
+  capacity      Int
+  warden        String
+  allottedRooms Int
+  vacantRooms   Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model section {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  officers  officer[] @relation("OfficerSection")
+  officerId String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
