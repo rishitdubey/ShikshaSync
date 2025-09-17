@@ -3,6 +3,7 @@ model department {
   name      String    @unique
   hod       String
   students  student[]
+  HOD       hod?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   faculty   faculty[]

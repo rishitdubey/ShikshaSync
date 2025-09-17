@@ -4,6 +4,7 @@ model admin {
   fullName  String
   staffId   String   @unique
   password  String
+  role      role     @default(ADMIN)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -17,7 +18,22 @@ model faculty {
   departmentName String
   designation    String
   sub_taught     String
-  department     department @relation(fields: [departmentName], references: [name])
+  role           role       @default(FACULTY)
+  department     department? @relation(fields: [departmentName], references: [name])
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+}
+
+model hod {
+  id             Int        @id @default(autoincrement())
+  email          String?    @unique
+  fullName       String
+  staffId        String     @unique
+  password       String
+  departmentName String     @unique
+  sub_taught     String
+  role           role       @default(HOD)
+  department     department? @relation(fields: [departmentName], references: [name])
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
 }
@@ -35,6 +51,7 @@ model student {
   date_of_birth  Int
   address        String
   curr_semester  Int
+  role           role       @default(STUDENT)
   department     department @relation(fields: [departmentName], references: [name])
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
@@ -46,9 +63,17 @@ model officer {
   password    String
   officerId   String   @unique
   designation String
+  role        role
   email       String?  @unique
   section     section? @relation("OfficerSection", fields: [sectionName], references: [name])
   sectionName String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+enum role {
+  ADMIN
+  HOD
+  FACULTY
+  STUDENT
 }
